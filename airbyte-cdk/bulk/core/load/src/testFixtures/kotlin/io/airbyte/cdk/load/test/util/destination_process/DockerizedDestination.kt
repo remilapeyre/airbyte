@@ -290,6 +290,7 @@ class DockerizedDestinationFactory(
         catalog: ConfiguredAirbyteCatalog?,
         useFileTransfer: Boolean,
         envVars: Map<String, String>,
+        micronautProperties: Map<Property, String>,
         vararg featureFlags: FeatureFlag,
     ): DestinationProcess {
         return DockerizedDestination(
@@ -299,7 +300,7 @@ class DockerizedDestinationFactory(
             catalog,
             testName,
             useFileTransfer,
-            envVars,
+            envVars + micronautProperties.mapKeys { (k, _) -> k.environmentVariable },
             *featureFlags,
         )
     }
